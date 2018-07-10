@@ -15,7 +15,7 @@ function toggleReactToSound(){
     if(reactToSound){
         document.getElementById("react-button").innerHTML = "Start reacting to sound";
         reactToSound = false;
-        setFace(state.restingFace);
+        setFace(state.face);
     }else{
         document.getElementById("react-button").innerHTML = "Stop reacting to sound";
         reactToSound = true;

@@ -1,6 +1,6 @@
 const WIDTH = 500;
-const HEIGHT = 200;
-const SENSITIVITY = 0.005;
+const HEIGHT = 220;
+const SENSITIVITY = 0.0005;
 let audioContext = null;
 let canvasContext = null;
 let mediaStreamSource = null;
@@ -70,6 +70,8 @@ function startCheering() {
     channel.unbind(channelName);
     clearTimeout(timeoutId);
     clearInterval(intervalId);
+    startCheeringMessage.innerText = "Stop cheering!!!";
+    startCheeringMessage.style.color = "red";
   }, 10000);
 }
 

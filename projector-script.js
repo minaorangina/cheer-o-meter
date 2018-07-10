@@ -22,11 +22,9 @@ const channel = pusher.subscribe(channelName);
 
 channel.bind("client-team-register", ({ teamId, teamName }) => {
   console.log(`TEAMNAME:::::::: ${teamName}`);
-  if (teams[teamId] === "") {
-    teams[teamId] = teamName;
-    // Display team name
-    teamRow[teamId].querySelector("h3").innerText = teamName;
-  }
+  teams[teamId] = teamName;
+  // Display team name
+  teamRow[teamId].querySelector("h3").innerText = teamName;
 });
 
 channel.bind("client-character-update", ({ teamId, state }) => {

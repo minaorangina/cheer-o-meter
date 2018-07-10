@@ -1,3 +1,21 @@
+* {
+  box-sizing: border-box;
+  padding: 0;
+  margin: 0;
+  font-family: "Trebuchet MS", "Lucida Sans Unicode", "Lucida Grande",
+    "Lucida Sans", Arial, sans-serif;
+}
+
+button {
+  font-size: 18px;
+  padding: 10px;
+}
+
+h1 {
+  text-align: center;
+  margin: 20px;
+}
+
 #cheering {
   display: none;
 }
@@ -5,4 +23,14 @@
 #start-cheering-message {
   color: lightseagreen;
   display: none;
+}
+
+#meter {
+  margin: auto;
+  display: block;
+}
+
+#customise-character {
+  text-align: center;
+  margin: auto;
 }

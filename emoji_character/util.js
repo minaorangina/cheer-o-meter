@@ -4,11 +4,11 @@ var sendToProjector = true;
 
 function toggleReactToSound(){
     if(reactToSound){
-        document.getElementById("react-button").innerHTML = "React to sound on";
+        document.getElementById("react-button").innerHTML = "Start reacting to sound";
         reactToSound = false;
         setFace(state.restingFace);
     }else{
-        document.getElementById("react-button").innerHTML = "React to sound off";
+        document.getElementById("react-button").innerHTML = "Stop reacting to sound";
         reactToSound = true;
     }
 }

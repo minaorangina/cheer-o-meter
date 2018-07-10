@@ -1,2 +1,2 @@
-const teamName = "my name";
-const teamId = 1; // 0, 1, 2 or 3
+const teamName = "change name";
+const teamId = 0; // 0, 1, 2 or 3

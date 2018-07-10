@@ -2,6 +2,8 @@ var WIDTH = 500;
 var HEIGHT = 50;
 const channelName = "private-into-university";
 const permissionToCheerEvent = "client-permission-to-cheer";
+
+const teamRow = document.querySelectorAll(".team-row");
 let teams = [];
 
 const pusher = new Pusher("6d5257a886da7d55512b", {
@@ -16,6 +18,8 @@ channel.bind("client-team-register", ({ teamName }) => {
   console.log(`TEAMNAME:::::::: ${teamName}`);
   if (teams.indexOf(teamName) === -1) {
     teams.push(teamName);
+
+    teamRow[getTeamIndex(teamName)].querySelector("h3").innerText = teamName;
   }
 });
 
@@ -24,7 +28,7 @@ channel.bind("client-volume", ({ teamName, fill }) => {
   const index = getTeamIndex(teamName);
   console.log("INDEX", index);
   let canvasContext = document
-    .querySelectorAll(".team-row canvas")
+    .querySelectorAll(".team-row .meter")
     [index].getContext("2d");
 
   draw(canvasContext, fill);

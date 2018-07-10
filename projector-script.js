@@ -4,7 +4,12 @@ const channelName = "private-into-university";
 const permissionToCheerEvent = "client-permission-to-cheer";
 
 const teamRow = document.querySelectorAll(".team-row");
-let teams = [];
+let teams = {
+  0: "",
+  1: "",
+  2: "",
+  3: ""
+};
 
 const pusher = new Pusher("6d5257a886da7d55512b", {
   cluster: "eu",
@@ -14,22 +19,20 @@ const pusher = new Pusher("6d5257a886da7d55512b", {
 });
 const channel = pusher.subscribe(channelName);
 
-channel.bind("client-team-register", ({ teamName }) => {
+channel.bind("client-team-register", ({ teamId, teamName }) => {
   console.log(`TEAMNAME:::::::: ${teamName}`);
-  if (teams.indexOf(teamName) === -1) {
-    teams.push(teamName);
+  if (teams[teamId] === "") {
+    teams[teamId] = teamName;
     // Display team name
-    teamRow[getTeamIndex(teamName)].querySelector("h3").innerText = teamName;
+    teamRow[teamId].querySelector("h3").innerText = teamName;
   }
 });
 
-channel.bind("client-volume", ({ teamName, fill }) => {
-  console.log(teamName, fill);
-  const index = getTeamIndex(teamName);
-  console.log("INDEX", index);
+channel.bind("client-volume", ({ teamId, teamName, fill }) => {
+  console.log(teamId, teamName, fill);
   let canvasContext = document
     .querySelectorAll(".team-row .meter")
-    [index].getContext("2d");
+    [teamId].getContext("2d");
 
   draw(canvasContext, fill);
 });
@@ -51,10 +54,6 @@ function permissionToCheer(index) {
     const res = channel.trigger("client-permission-to-cheer", chosenTeam);
     console.log(`Successfully given permission? ${res}`);
   }
-}
-
-function getTeamIndex(teamName) {
-  return teams.indexOf(teamName);
 }
 
 function draw(canvasContext, fill) {

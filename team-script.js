@@ -15,6 +15,7 @@ let resetButton, registerButton, teamNameTitle;
 let timeoutId, intervalId;
 let isTeamRegistered = false;
 
+const teamId = 0;
 const teamName = "the-perfect-ones";
 
 const pusher = new Pusher("6d5257a886da7d55512b", {
@@ -50,7 +51,7 @@ function reset() {
 // Attached to button
 function registerTeam(e) {
   if (teamName) {
-    const res = channel.trigger("client-team-register", { teamName });
+    const res = channel.trigger("client-team-register", { teamId, teamName });
     if (res === true) {
       console.info(`${teamName}, you are now registered!`);
       isTeamRegistered = true;
@@ -65,7 +66,7 @@ function registerTeam(e) {
 function startCheering() {
   // countdown?
   intervalId = setInterval(() => {
-    const res = channel.trigger("client-volume", { teamName, fill });
+    const res = channel.trigger("client-volume", { teamId, teamName, fill });
     console.log(`Sending volume ${res}`);
   }, 200);
 

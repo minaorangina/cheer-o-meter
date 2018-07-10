@@ -1,7 +1,7 @@
 
 function setup(){
     var sendToProjector = true;
-    var restingFace = "😎";
+    var restingFace = "🤩";
 
     return {restingFace, sendToProjector};
 }
@@ -18,6 +18,7 @@ function faceControl(){
 
 }
 
+
 function danceControl(){
     repeat(3,()=>{
         leanLeft();
@@ -30,3 +31,18 @@ function danceControl(){
         armsUp();
     });
 }
+
+/* Possible dance moves
+    //Leaning
+    leanLeft();
+    leanRight();
+    leanMiddle();
+    
+    //Arms
+    armsSide();
+    armsLow();
+    armsMiddle();
+    armsUp();
+
+    Remember: no while(true)
+*/

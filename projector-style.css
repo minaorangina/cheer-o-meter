@@ -1,6 +1,19 @@
+* {
+  box-sizing: border-box;
+  padding: 0;
+  margin: 0;
+}
+
 .container {
+  /* text-align: center; */
+  width: 100vw;
+  height: 100vh;
   display: flex;
   flex-direction: column;
+}
+
+.team-row {
+  margin: 40px auto;
 }
 
 canvas {

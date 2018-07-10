@@ -1,15 +1,14 @@
 var dancing = false;
 var reactToSound = false;
-var myTeamId = -1;
 var sendToProjector = true;
 
 function toggleReactToSound(){
     if(reactToSound){
-        document.getElementById("react-button").innerHTML = "React to sound off";
+        document.getElementById("react-button").innerHTML = "React to sound on";
         reactToSound = false;
         setFace(state.restingFace);
     }else{
-        document.getElementById("react-button").innerHTML = "React to sound on";
+        document.getElementById("react-button").innerHTML = "React to sound off";
         reactToSound = true;
     }
 }
@@ -17,7 +16,7 @@ function toggleReactToSound(){
 function drawCharacter(state){
     if(sendToProjector){
         channel.trigger("client-character-update",{
-            teamId:myTeamId,
+            teamId,
             state
         });
     }
@@ -40,14 +39,11 @@ function repeat(count, fun){
     }
 }
 
-var myTeamName = "";
 
 function init(){
     var initObject = setup();
-    myTeamName = initObject.teamName;
     defaultState.restingFace = initObject.restingFace;
     state.restingFace = initObject.restingFace;
-    myTeamId = initObject.teamId;
     sendToProjector = initObject.sendToProjector;
     drawCharacter(state);
     setTimeout(task,currentTimeout);
@@ -58,7 +54,7 @@ function doDance(){
     danceControl();
 }
 
-function reset(){
+function resetCharacter(){
     state = Object.assign({},defaultState);
     drawCharacter(state);
 }

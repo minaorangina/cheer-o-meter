@@ -27,7 +27,7 @@ function drawCharacter(state){
 
 //Runs when the code first starts
 function volume(){
-    return Math.random() * 10;
+    return meter.volume * 10;
 }
 
 function setFace(face){

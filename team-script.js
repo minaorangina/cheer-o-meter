@@ -28,6 +28,7 @@ channel.bind(permissionToCheerEvent, teamToCheer => {
   console.log("Received permission to cheer");
   if (teamToCheer === teamName) {
     console.log(`${teamName}'s time to cheer!`);
+    reset();
     startCheering();
   }
 });

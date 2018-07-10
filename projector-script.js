@@ -28,6 +28,11 @@ channel.bind("client-team-register", ({ teamId, teamName }) => {
   }
 });
 
+channel.bind("client-character-update", ({ teamId, state }) => {
+  var canvasDomObject = teamRow[teamId].querySelector(".team-logo");
+  doDraw(state,canvasDomObject);
+});
+
 channel.bind("client-volume", ({ teamId, teamName, fill }) => {
   console.log(teamId, teamName, fill);
   let canvasContext = document

@@ -1,18 +1,21 @@
-var audioContext = null;
-var canvasContext = null;
-var meter = null;
-var WIDTH = 500;
-var HEIGHT = 50;
-const SENSITIVITY = 0.005;
+const WIDTH = 500;
+const HEIGHT = 150;
+const SENSITIVITY = 0.0005;
+let audioContext = null;
+let canvasContext = null;
+let mediaStreamSource = null;
+
+let meter = null;
+let rafID = null;
+let fill = 0.0;
 let hue = 0;
-var rafID = null;
-var fill = 0.0;
 const channelName = "private-into-university";
 const permissionToCheerEvent = "client-permission-to-cheer";
-let isCompetitionTime = false;
 
 let resetButton, registerButton, teamNameTitle;
 let timeoutId, intervalId;
+
+let isCompetitionTime = false;
 let isTeamRegistered = false;
 
 const teamId = 0;
@@ -115,7 +118,7 @@ function draw() {
 
   // draw a bar based on the current volume
   canvasContext.fillStyle = "hsla(" + hue + ", 100%, 40%, 1)";
-  var grad = canvasContext.createLinearGradient(0, 0, 0, 130);
+  const grad = canvasContext.createLinearGradient(0, 0, 0, 130);
   grad.addColorStop(0, "transparent");
   grad.addColorStop(1, "rgba(0,0,0,0.5)");
   canvasContext.fillStyle = grad;
@@ -161,8 +164,6 @@ function setupMicrophone() {
 function onMicrophoneDenied() {
   alert("Stream generation failed.");
 }
-
-var mediaStreamSource = null;
 
 function onMicrophoneGranted(stream) {
   // Create an AudioNode from the stream.

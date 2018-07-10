@@ -1,5 +1,5 @@
 var WIDTH = 500;
-var HEIGHT = 50;
+var HEIGHT = 150;
 const channelName = "private-into-university";
 const permissionToCheerEvent = "client-permission-to-cheer";
 

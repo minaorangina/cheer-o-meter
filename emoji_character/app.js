@@ -1,12 +1,9 @@
 
 function setup(){
-    var teamId = 0;
     var sendToProjector = true;
-
-    var teamName = "?";
     var restingFace = "😎";
 
-    return {teamName, teamId, restingFace, sendToProjector};
+    return {restingFace, sendToProjector};
 }
 
 function faceControl(){

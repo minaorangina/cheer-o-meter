@@ -2,6 +2,15 @@ var dancing = false;
 var reactToSound = false;
 var sendToProjector = true;
 
+var defaultState = {
+    face: "😎",
+    arms: 0,
+    body: 1,
+    offsetX: 0
+}
+
+var state = Object.assign({},defaultState);
+
 function toggleReactToSound(){
     if(reactToSound){
         document.getElementById("react-button").innerHTML = "Start reacting to sound";
@@ -42,10 +51,10 @@ function repeat(count, fun){
 
 function init(){
     var initObject = setup();
-    defaultState.restingFace = initObject.restingFace;
+    defaultState.face = initObject.restingFace;
+    state.face = initObject.restingFace;
     sendToProjector = initObject.sendToProjector;
-    setFace(initObject.restingFace);
-    //drawCharacter(state);
+    drawCharacter(state);
     setTimeout(task,currentTimeout);
 }
 
@@ -140,14 +149,5 @@ function syncState(diff){
 function faceState(diff){
     faceQueue.push(diff);
 }
-
-var defaultState = {
-    face: "😎",
-    arms: 0,
-    body: 1,
-    offsetX: 0
-}
-
-var state = Object.assign({},defaultState);
 
 init();

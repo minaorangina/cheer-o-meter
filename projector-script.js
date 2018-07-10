@@ -14,7 +14,8 @@ let teams = {
 const pusher = new Pusher("6d5257a886da7d55512b", {
   cluster: "eu",
   encrypted: true,
-  authEndpoint: "/auth",
+  authEndpoint:
+    "http://into-university-auth-endpoint.herokuapp.com/pusher/auth",
   disableStats: true
 });
 const channel = pusher.subscribe(channelName);
@@ -30,7 +31,7 @@ channel.bind("client-team-register", ({ teamId, teamName }) => {
 
 channel.bind("client-character-update", ({ teamId, state }) => {
   var canvasDomObject = teamRow[teamId].querySelector(".team-logo");
-  doDraw(state,canvasDomObject);
+  doDraw(state, canvasDomObject);
 });
 
 channel.bind("client-volume", ({ teamId, teamName, fill }) => {

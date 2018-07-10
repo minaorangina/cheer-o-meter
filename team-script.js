@@ -1,6 +1,6 @@
 const WIDTH = 500;
-const HEIGHT = 150;
-const SENSITIVITY = 0.0005;
+const HEIGHT = 200;
+const SENSITIVITY = 0.005;
 let audioContext = null;
 let canvasContext = null;
 let mediaStreamSource = null;
@@ -18,19 +18,18 @@ let timeoutId, intervalId;
 let isCompetitionTime = false;
 let isTeamRegistered = false;
 
-const teamId = 0;
-const teamName = "the-perfect-ones";
-
 const pusher = new Pusher("6d5257a886da7d55512b", {
   cluster: "eu",
   encrypted: true,
-  authEndpoint: "/auth",
+  authEndpoint:
+    "http://into-university-auth-endpoint.herokuapp.com/pusher/auth",
   disableStats: true
 });
 const channel = pusher.subscribe(channelName);
 
 // Bind to events
 channel.bind("pusher:subscription_succeeded", getStarted);
+
 channel.bind(permissionToCheerEvent, teamToCheer => {
   console.log("Received permission to cheer");
   if (teamToCheer === teamName) {
@@ -39,6 +38,7 @@ channel.bind(permissionToCheerEvent, teamToCheer => {
     startCheering();
   }
 });
+
 channel.bind("client-competition-time", () => {
   reset();
   isCompetitionTime = true;
@@ -51,20 +51,6 @@ function reset() {
   draw();
 }
 
-// Attached to button
-function registerTeam(e) {
-  if (teamName) {
-    const res = channel.trigger("client-team-register", { teamId, teamName });
-    if (res === true) {
-      console.info(`${teamName}, you are now registered!`);
-      isTeamRegistered = true;
-      registerButton.innerText = "Team registered";
-      registerButton.disabled = true;
-      teamNameTitle.innerText = teamName;
-    }
-  }
-}
-
 // Triggered remotely by us
 function startCheering() {
   // countdown?
@@ -73,15 +59,13 @@ function startCheering() {
     console.log(`Sending volume ${res}`);
   }, 200);
 
-  timeoutId = setTimeout(stopCheering, 10000);
-}
-
-// disconnect entirely
-function stopCheering() {
-  console.log("unbound channel");
-  channel.unbind(channelName);
-  clearTimeout(timeoutId);
-  clearInterval(intervalId);
+  timeoutId = setTimeout(() => {
+    // disconnect entirely
+    console.log("unbound channel");
+    channel.unbind(channelName);
+    clearTimeout(timeoutId);
+    clearInterval(intervalId);
+  }, 10000);
 }
 
 /**************************
@@ -91,12 +75,21 @@ function stopCheering() {
 function getStarted() {
   canvasContext = document.getElementById("meter").getContext("2d");
   resetButton = document.querySelector("#reset");
-  registerButton = document.querySelector("#register");
   teamNameTitle = document.querySelector("#team-name");
 
-  registerButton.addEventListener("click", registerTeam);
   resetButton.addEventListener("click", reset);
+
+  registerTeam();
   setupMicrophone();
+}
+
+function registerTeam(e) {
+  const res = channel.trigger("client-team-register", { teamId, teamName });
+  if (res === true) {
+    console.info(`${teamName}, you are now registered!`);
+    isTeamRegistered = true;
+    teamNameTitle.innerText = teamName;
+  }
 }
 
 function onLevelChange(time) {

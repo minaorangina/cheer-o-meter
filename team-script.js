@@ -9,8 +9,9 @@ var rafID = null;
 var fill = 0.0;
 const channelName = "private-into-university";
 const permissionToCheerEvent = "client-permission-to-cheer";
+let isCompetitionTime = false;
 
-let registerButton, teamNameTitle;
+let resetButton, registerButton, teamNameTitle;
 let timeoutId, intervalId;
 let isTeamRegistered = false;
 
@@ -23,6 +24,8 @@ const pusher = new Pusher("6d5257a886da7d55512b", {
   disableStats: true
 });
 const channel = pusher.subscribe(channelName);
+
+// Bind to events
 channel.bind("pusher:subscription_succeeded", getStarted);
 channel.bind(permissionToCheerEvent, teamToCheer => {
   console.log("Received permission to cheer");
@@ -32,20 +35,16 @@ channel.bind(permissionToCheerEvent, teamToCheer => {
     startCheering();
   }
 });
+channel.bind("client-competition-time", () => {
+  reset();
+  isCompetitionTime = true;
+  document.querySelector("#customise-character").style.display = "none";
+  document.querySelector("#cheering").style.display = "block";
+});
 
 function reset() {
   fill = 0;
   draw();
-}
-
-function getStarted() {
-  canvasContext = document.getElementById("meter").getContext("2d");
-  registerButton = document.querySelector("#register");
-  teamNameTitle = document.querySelector("#team-name");
-
-  // to add
-  registerButton.addEventListener("click", registerTeam);
-  setupMicrophone();
 }
 
 // Attached to button
@@ -84,6 +83,17 @@ function stopCheering() {
 /**************************
   NOTHING TO SEE HERE :)   
 **************************/
+
+function getStarted() {
+  canvasContext = document.getElementById("meter").getContext("2d");
+  resetButton = document.querySelector("#reset");
+  registerButton = document.querySelector("#register");
+  teamNameTitle = document.querySelector("#team-name");
+
+  registerButton.addEventListener("click", registerTeam);
+  resetButton.addEventListener("click", reset);
+  setupMicrophone();
+}
 
 function onLevelChange(time) {
   const randomMultiplier = SENSITIVITY + Math.random() * 0.0001;

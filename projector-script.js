@@ -18,7 +18,7 @@ channel.bind("client-team-register", ({ teamName }) => {
   console.log(`TEAMNAME:::::::: ${teamName}`);
   if (teams.indexOf(teamName) === -1) {
     teams.push(teamName);
-
+    // Display team name
     teamRow[getTeamIndex(teamName)].querySelector("h3").innerText = teamName;
   }
 });
@@ -33,6 +33,10 @@ channel.bind("client-volume", ({ teamName, fill }) => {
 
   draw(canvasContext, fill);
 });
+
+function competitionTime() {
+  channel.trigger("client-competition-time", {});
+}
 
 // To start competition for a team,
 // call `permissionToCheer` with the

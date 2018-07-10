@@ -14,7 +14,12 @@
 
 <body>
     <div id="customise-character">
-        CUSTOMISE CHARACTER
+        <canvas id="character-canvas" width="300" height="300" style="border:solid; border-color:black; border-width:1px;"></canvas>
+        <div>
+            <button id="react-button" onclick="toggleReactToSound()">React to sound off</button>
+            <button id="dance-button" onclick="doDance()">Do dance</button>
+            <button id="reset-button" onclick="reset()">Reset</button>
+        </div>
     </div>
 
     <div id="cheering">
@@ -24,6 +29,9 @@
         <canvas id="meter" width="500" height="150"></canvas>
     </div>
     <script src="team-script.js"></script>
+    <script type="text/javascript" src="emoji_character/draw.js" charset="utf-8"></script>
+    <script type="text/javascript" src="emoji_character/app.js" charset="utf-8"></script>
+    <script type="text/javascript" src="emoji_character/util.js" charset="utf-8"></script>
 </body>
 
 </html>

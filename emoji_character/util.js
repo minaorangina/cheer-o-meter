@@ -54,7 +54,7 @@ function doDance(){
     danceControl();
 }
 
-function reset(){
+function resetCharacter(){
     state = Object.assign({},defaultState);
     drawCharacter(state);
 }

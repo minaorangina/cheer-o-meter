@@ -54,6 +54,11 @@ function reset() {
 // Triggered remotely by us
 function startCheering() {
   // countdown?
+  const startCheeringMessage = document.querySelector(
+    "#start-cheering-message"
+  );
+  startCheeringMessage.innerText = "Start cheering!!!";
+  startCheeringMessage.style.display = "block";
   intervalId = setInterval(() => {
     const res = channel.trigger("client-volume", { teamId, teamName, fill });
     console.log(`Sending volume ${res}`);

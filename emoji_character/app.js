@@ -8,9 +8,9 @@ function setup(){
 
 function faceControl(){
 
-    if(volume() < 3){
+    if(volume() < 1){
         setFace("😟")
-    }else if(volume() < 5){
+    }else if(volume() < 2){
         setFace("😐")
     }else{
         setFace("😃")

@@ -43,9 +43,9 @@ function repeat(count, fun){
 function init(){
     var initObject = setup();
     defaultState.restingFace = initObject.restingFace;
-    state.restingFace = initObject.restingFace;
     sendToProjector = initObject.sendToProjector;
-    drawCharacter(state);
+    setFace(initObject.restingFace);
+    //drawCharacter(state);
     setTimeout(task,currentTimeout);
 }
 

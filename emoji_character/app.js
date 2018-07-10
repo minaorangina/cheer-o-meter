@@ -1,7 +1,7 @@
 
 function setup(){
     var sendToProjector = true;
-    var restingFace = "😎";
+    var restingFace = "🤩";
 
     return {restingFace, sendToProjector};
 }

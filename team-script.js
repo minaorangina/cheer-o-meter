@@ -8,6 +8,8 @@ let hue = 0;
 var rafID = null;
 var fill = 0.0;
 const channelName = "private-into-university";
+const permissionToCheerEvent = "client-permission-to-cheer";
+
 let registerButton, teamNameTitle;
 let timeoutId, intervalId;
 let isTeamRegistered = false;
@@ -22,13 +24,18 @@ const pusher = new Pusher("6d5257a886da7d55512b", {
 });
 const channel = pusher.subscribe(channelName);
 channel.bind("pusher:subscription_succeeded", getStarted);
-channel.bind("client-permisson-to-cheer", teamToCheer => {
+channel.bind(permissionToCheerEvent, teamToCheer => {
+  console.log("Received permission to cheer");
   if (teamToCheer === teamName) {
+    console.log(`${teamName}'s time to cheer!`);
     startCheering();
   }
 });
 
-function init() {}
+function reset() {
+  fill = 0;
+  draw();
+}
 
 function getStarted() {
   canvasContext = document.getElementById("meter").getContext("2d");
@@ -37,7 +44,6 @@ function getStarted() {
 
   // to add
   registerButton.addEventListener("click", registerTeam);
-
   setupMicrophone();
 }
 
@@ -58,7 +64,6 @@ function registerTeam(e) {
 // Triggered remotely by us
 function startCheering() {
   // countdown?
-
   intervalId = setInterval(() => {
     const res = channel.trigger("client-volume", { teamName, fill });
     console.log(`Sending volume ${res}`);
@@ -81,12 +86,8 @@ function stopCheering() {
 
 function onLevelChange(time) {
   const randomMultiplier = SENSITIVITY + Math.random() * 0.0001;
-
   fill += meter.volume * randomMultiplier;
-
   draw();
-
-  // set up the next visual callback
   rafID = window.requestAnimationFrame(onLevelChange);
 }
 
@@ -102,12 +103,10 @@ function draw() {
 
   // draw a bar based on the current volume
   canvasContext.fillStyle = "hsla(" + hue + ", 100%, 40%, 1)";
-  // canvasContext.fillRect(25, 80, this.widths, 25);
   var grad = canvasContext.createLinearGradient(0, 0, 0, 130);
   grad.addColorStop(0, "transparent");
   grad.addColorStop(1, "rgba(0,0,0,0.5)");
   canvasContext.fillStyle = grad;
-  // canvasContext.fillRect(25, 80, this.widths, 25);
   canvasContext.fillRect(0, 0, fill * WIDTH, HEIGHT);
 }
 

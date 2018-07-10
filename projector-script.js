@@ -1,6 +1,7 @@
 var WIDTH = 500;
 var HEIGHT = 50;
 const channelName = "private-into-university";
+const permissionToCheerEvent = "client-permission-to-cheer";
 let teams = [];
 
 const pusher = new Pusher("6d5257a886da7d55512b", {
@@ -38,7 +39,9 @@ function permissionToCheer(index) {
   const chosenTeam = teams[index];
   console.log(`CHOSEN TEAM ${chosenTeam}`);
   if (chosenTeam) {
-    channel.trigger("client-permission-to-cheer", chosenTeam);
+    console.log("TRIGGER PERMISSION");
+    const res = channel.trigger("client-permission-to-cheer", chosenTeam);
+    console.log(`Successfully given permission? ${res}`);
   }
 }
 
